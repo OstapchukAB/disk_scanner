@@ -1,0 +1,9 @@
+{
+    "path": "C:\\",
+    "output": "large_files_report.csv",
+    "error_log": "disk_scan_errors.log",
+    "min_size": 50,
+    "log_interval_files": 500,
+    "log_interval_dirs": 50,
+    "flush_interval": 1000
+}
