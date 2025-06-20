@@ -1,0 +1,69 @@
+================================================================================
+АНАЛИТИЧЕСКИЙ ОТЧЕТ ПО ИСПОЛЬЗОВАНИЮ ДИСКОВОГО ПРОСТРАНСТВА
+Сгенерирован: 2025-06-20 12:24:34
+================================================================================
+
+Общий размер просканированных данных: 1028.48 ГБ
+Количество файлов: 182
+Количество директорий: 162089
+Средний размер файла: 278.23 МБ
+Максимальный размер файла: 13041.54 МБ
+
+================================================================================
+ТОП-15 ФАЙЛОВ ПО РАЗМЕРУ:
+================================================================================
+1. C:\/hiberfil.sys - 13041.54 МБ
+2. C:\/pagefile.sys - 4864.00 МБ
+3. C:\Users\Anton\Documents\VS2022\ParsingGgak8\ParsingGgak8Tests\bin\Debug\net8.0/20230731.vggi - 1431.38 МБ
+4. C:\Users\Anton\Documents\VS2022\WPF\ggakwpf\GgakConsole\bin\Debug\net8.0/20230731.vggi - 1431.38 МБ
+5. C:\Users\Anton\Documents\VS2022\WPF\ggakwpf\GgakConsoleTest\bin\Debug\net8.0/20230731.vggi - 1431.38 МБ
+6. C:\Users\Anton\Documents\VS2022\WPF\ggakwpf\ggaklibtests\bin\Debug\net8.0/20230731.vggi - 1431.38 МБ
+7. C:\Users\Anton\AppData\Local\jan-updater\pending/jan-win-x64-0.5.13.exe - 972.25 МБ
+8. C:\Users\Anton\AppData\Local\jan-updater/installer.exe - 972.25 МБ
+9. C:\Users\Anton\Desktop\Gigabyte B760M DS3H DDR4\w10x64/GCC_24.06.03.01_20240612.zip - 775.79 МБ
+10. C:\ProgramData\Microsoft\Windows\Containers\BaseImages\bf8d0b81-d4f9-47fb-b690-38ac2227f42b/BaseLayer.vhdx - 612.00 МБ
+11. C:\ProgramData\Microsoft\Windows\Containers\PortableBaseLayer/WindowsDefenderApplicationGuard.vhdx - 612.00 МБ
+12. C:\Users\Anton\Documents\VS2022\FileReadWriteAsync\.vs\FileReadWriteAsync\v17\TestStore\0/003.testlog - 532.50 МБ
+13. C:\Users\Anton\AppData\Local\Yandex\YandexBrowser\Application\25.4.4.543\Installer/browser.7z - 510.42 МБ
+14. C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin/cublasLt64_12.dll - 507.18 МБ
+15. C:\$WinREAgent\Scratch/update.wim - 479.63 МБ
+
+================================================================================
+ТОП-15 ДИРЕКТОРИЙ ПО РАЗМЕРУ:
+================================================================================
+1. nan/C:\ - 138147.03 МБ
+2. C:\/Users - 61419.60 МБ
+3. C:\Users/Anton - 61418.02 МБ
+4. C:\Users\Anton/Documents - 39299.04 МБ
+5. C:\Users\Anton\Documents/VS2022 - 34153.76 МБ
+6. C:\/Windows - 29149.52 МБ
+7. C:\Users\Anton\Documents\VS2022/MyGgakSort - 15126.96 МБ
+8. C:\/Program Files - 15031.00 МБ
+9. C:\Users\Anton\Documents\VS2022\MyGgakSort/ConsoleUI - 14965.29 МБ
+10. C:\Users\Anton\Documents\VS2022\MyGgakSort\ConsoleUI/bin - 14964.61 МБ
+11. C:\Users\Anton\Documents\VS2022\MyGgakSort\ConsoleUI\bin\Debug/net8.0 - 14961.75 МБ
+12. C:\Users\Anton\Documents\VS2022\MyGgakSort\ConsoleUI\bin/Debug - 14961.75 МБ
+13. C:\Users\Anton/AppData - 12969.25 МБ
+14. C:\Windows/WinSxS - 12327.20 МБ
+15. C:\Users\Anton\AppData/Local - 11587.71 МБ
+
+================================================================================
+РАСПРЕДЕЛЕНИЕ ПО ТИПАМ ФАЙЛОВ:
+================================================================================
+           count  total_size_gb  avg_size_mb
+Extension                                   
+sys            3      17.552788  5991.351644
+dll           53       5.904791   114.085022
+vggi           5       5.819836  1191.902391
+exe           28       5.262464   192.455841
+msi           11       2.618156   243.726562
+vhdx           4       1.463867   374.750000
+wim            5       1.219577   249.769282
+zip            6       1.111737   189.736489
+lib            3       0.981867   335.144088
+7z             2       0.937333   479.914660
+pdf            7       0.789917   115.553570
+testlog        1       0.520021   532.501979
+vsix           6       0.516598    88.166025
+csv            4       0.489850   125.401515
+vmrs           1       0.452190   463.042969
