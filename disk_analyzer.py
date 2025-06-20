@@ -42,6 +42,7 @@ def analyze_disk_data(input_file, output_dir, top_n=20):
     plt.title(f'Топ-{top_n} файлов по размеру')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, 'top_files.png'), dpi=150)
+    plt.close()
     
     # 2. Топ директорий по размеру
     plt.figure(figsize=(14, 10))
@@ -51,24 +52,51 @@ def analyze_disk_data(input_file, output_dir, top_n=20):
     plt.title(f'Топ-{top_n} директорий по размеру')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, 'top_dirs.png'), dpi=150)
+    plt.close()
     
-    # 3. Распределение по типам файлов (расширениям)
-    plt.figure(figsize=(12, 12))
-    ext_size = files_df.groupby('Size')['размер_МБ'].sum()
-    ext_count = files_df.groupby('Size').size()
+    # 3. Распределение по типам файлов (расширениям) с легендой
+    plt.figure(figsize=(14, 10))
+    ext_size = files_df.groupby('Extension')['размер_МБ'].sum()
     
-    # Фильтрация мелких категорий
-    ext_size = ext_size[ext_size > ext_size.quantile(0.1)]
+    # Фильтрация мелких категорий и объединение в "Другие"
+    threshold = ext_size.quantile(0.9)  # Порог для объединения мелких категорий
+    small_exts = ext_size[ext_size < threshold]
+    main_exts = ext_size[ext_size >= threshold]
     
-    plt.pie(
-        ext_size,
-        labels=ext_size.index,
-        autopct=lambda p: f'{p:.1f}%\n({ext_size.sum()*p/100:.0f} МБ)',
+    # Добавляем категорию "Другие" если есть мелкие расширения
+    if not small_exts.empty:
+        main_exts['Другие'] = small_exts.sum()
+    
+    # Сортируем по размеру
+    main_exts = main_exts.sort_values(ascending=False)
+    
+    # Создаем данные для диаграммы
+    sizes = main_exts.values
+    labels = main_exts.index
+    
+    # Создаем круговую диаграмму с легендой
+    patches, texts, autotexts = plt.pie(
+        sizes,
+        autopct=lambda p: f'{p:.1f}%' if p > 3 else '',
         startangle=90,
-        textprops={'fontsize': 9}
+        textprops={'fontsize': 9},
+        pctdistance=0.85
     )
+    
+    # Добавляем легенду снаружи диаграммы
+    plt.legend(
+        patches,
+        [f"{l} ({s:.1f} ГБ)" for l, s in zip(labels, sizes/1024)],
+        title="Типы файлов",
+        loc="center left",
+        bbox_to_anchor=(1, 0, 0.5, 1),
+        fontsize=9
+    )
+    
     plt.title('Распределение места по типам файлов')
-    plt.savefig(os.path.join(output_dir, 'file_types.png'), dpi=150)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'file_types.png'), dpi=150, bbox_inches='tight')
+    plt.close()
     
     # 4. Кумулятивный объем файлов
     plt.figure(figsize=(12, 8))
@@ -80,15 +108,15 @@ def analyze_disk_data(input_file, output_dir, top_n=20):
     plt.title('Кумулятивное распределение объема файлов')
     plt.grid(True, alpha=0.3)
     plt.savefig(os.path.join(output_dir, 'cumulative_size.png'), dpi=150)
+    plt.close()
     
     # 5. Динамика создания файлов (если есть данные)
-    if 'дата создания' in files_df.columns:
+    if 'DateTimeCreate' in files_df.columns:
         try:
             # Преобразуем даты и фильтруем корректные
             files_df['дата_создания'] = pd.to_datetime(
-                files_df['дата создания'], 
-                errors='coerce',
-                format='%Y-%m-%d %H:%M:%S'
+                files_df['DateTimeCreate'], 
+                errors='coerce'
             )
             valid_dates = files_df.dropna(subset=['дата_создания'])
             
@@ -105,6 +133,7 @@ def analyze_disk_data(input_file, output_dir, top_n=20):
             plt.xticks(rotation=45, ha='right')
             plt.tight_layout()
             plt.savefig(os.path.join(output_dir, 'creation_timeline.png'), dpi=150)
+            plt.close()
         except Exception as e:
             print(f"Ошибка при обработке дат: {str(e)}")
     
@@ -115,10 +144,11 @@ def analyze_disk_data(input_file, output_dir, top_n=20):
     plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['lightblue', 'lightgreen'])
     plt.title('Распределение места между файлами и директориями')
     plt.savefig(os.path.join(output_dir, 'files_vs_dirs.png'), dpi=150)
+    plt.close()
     
     # 7. Тепловая карта расширений и размеров
     plt.figure(figsize=(12, 8))
-    top_extensions = ext_size.nlargest(30).index
+    top_extensions = files_df['Extension'].value_counts().nlargest(30).index
     filtered_files = files_df[files_df['Extension'].isin(top_extensions)]
     
     # Логарифмируем размеры для лучшей визуализации
@@ -140,6 +170,7 @@ def analyze_disk_data(input_file, output_dir, top_n=20):
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, 'size_heatmap.png'), dpi=150)
+    plt.close()
     
     # Генерация отчета
     generate_text_report(df, output_dir, top_n)
