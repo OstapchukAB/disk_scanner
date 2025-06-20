@@ -67,7 +67,7 @@ def scan_disk(start_path, output_file, error_log_file, min_size_mb, log_interval
         
         # Инициализируем CSV writer
         csv_writer = csv.writer(csv_f)
-        csv_writer.writerow(['Path', 'Name', 'Type', 'Size', 'Extension', 'DateTimeCreate'])
+        csv_writer.writerow(['Path', 'Name', 'Type', 'Size', 'Extension', 'DateTimeCreate','DateTimeLastModification'])
         
         # Записываем заголовок в лог ошибок
         err_f.write(f"Disk Scan Report - {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -77,9 +77,9 @@ def scan_disk(start_path, output_file, error_log_file, min_size_mb, log_interval
         err_f.flush()
         
         # Функция для записи строки в CSV
-        def write_csv_row(path, name, item_type, size, extension="", creation_date=""):
+        def write_csv_row(path, name, item_type, size, extension="", creation_date="", last_modification_time=""):
             try:
-                csv_writer.writerow([path, name, item_type, size, extension, creation_date])
+                csv_writer.writerow([path, name, item_type, size, extension, creation_date, last_modification_time])
                 # Периодически сбрасываем буфер
                 if stats['files_written'] % flush_interval == 0 or stats['dirs'] % 100 == 0:
                     csv_f.flush()
@@ -140,11 +140,20 @@ def scan_disk(start_path, output_file, error_log_file, min_size_mb, log_interval
                         creation_time = os.path.getctime(file_path)
                         creation_date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(creation_time))
                     except Exception:
-                        creation_date = "ошибка даты"
+                        creation_date = "ошибка даты создания файла"
+                    
+                     # Получаем дату последней модификации файла
+                    try:
+                        last_modification_time = os.path.getmtime(file_path)
+                        last_modification_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_modification_time))
+                    except Exception:
+                        last_modification_time = "ошибка даты последней модификации файла"
+
+
                     
                     # Записываем файл в CSV
                     parent_path = os.path.dirname(file_path)
-                    write_csv_row(parent_path, name, 'file', file_size, file_ext, creation_date)
+                    write_csv_row(parent_path, name, 'file', file_size, file_ext, creation_date, last_modification_time)
                     stats['files_written'] += 1
                 except Exception as e:
                     stats['scan_errors'] += 1
